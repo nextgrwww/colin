@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tekken (Hammad Ahmed) - Freelancer Portfolio</title>
-    <!-- Dynamic SVG Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23f5df4e'/%3E%3Ctext x='50' y='74' font-family='Poppins, sans-serif' font-size='65' font-weight='800' fill='%23212529' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
-    <!-- Tailwind CSS (CDN for prototyping/single-file use) -->
+    <title id="page-title">Portfolio</title>
+    <!-- Dynamic Favicon Link -->
+    <link id="dynamic-favicon" rel="icon" type="image/svg+xml" href="">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,13 +17,14 @@
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Poppins', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#f5df4e', // The signature yellow
+                        primary: 'rgb(var(--color-primary) / <alpha-value>)',
                         dark: '#212529',
                         darker: '#111418',
                         light: '#f8f9fa',
@@ -42,36 +43,34 @@
         }
     </script>
     <style>
-        /* Custom styles for things Tailwind is too verbose for */
+        /* Theme Variables */
+        :root { --color-primary: 245 223 78; } /* Default Yellow */
+        .theme-yellow { --color-primary: 245 223 78; }
+        .theme-blue { --color-primary: 59 130 246; }
+        .theme-green { --color-primary: 16 185 129; }
+        .theme-red { --color-primary: 239 68 68; }
+        .theme-purple { --color-primary: 168 85 247; }
+
         .progress-bar-wrap {
-            background-color: #e9ecef;
             border-radius: 999px;
             height: 8px;
             overflow: hidden;
             margin-top: 0.5rem;
         }
         .progress-bar {
-            background-color: #f5df4e;
+            background-color: rgb(var(--color-primary));
             height: 100%;
             border-radius: 999px;
         }
         
-        /* FAQ Accordion Styling */
-        details > summary {
-            list-style: none;
-        }
-        details > summary::-webkit-details-marker {
-            display: none;
-        }
-        details[open] summary ~ * {
-            animation: sweep .3s ease-in-out;
-        }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
         @keyframes sweep {
-            0%    {opacity: 0; margin-top: -10px}
-            100%  {opacity: 1; margin-top: 0px}
+            0% {opacity: 0; margin-top: -10px}
+            100% {opacity: 1; margin-top: 0px}
         }
         
-        /* Custom form input border */
         .form-input-custom {
             border: none;
             border-bottom: 2px solid rgba(0,0,0,0.1);
@@ -81,13 +80,19 @@
             padding-right: 0;
             transition: all 0.3s;
         }
+        .dark .form-input-custom {
+            border-bottom-color: rgba(255,255,255,0.2);
+            color: #f8f9fa;
+        }
         .form-input-custom:focus {
             outline: none;
             box-shadow: none;
             border-color: #212529;
         }
+        .dark .form-input-custom:focus {
+            border-color: rgb(var(--color-primary));
+        }
 
-        /* Fade-in up animation classes */
         .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
@@ -99,17 +104,20 @@
         }
     </style>
 </head>
-<body class="font-sans text-gray-600 antialiased bg-white">
+<body class="font-sans text-gray-600 dark:text-gray-400 antialiased bg-white dark:bg-[#111418] transition-colors duration-300">
+
+    <!-- Light/Dark Mode Sticky Toggle -->
+    <button id="theme-toggle" class="fixed right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 border border-r-0 border-gray-200 dark:border-gray-700 shadow-md p-3 rounded-l-lg z-50 transition-colors focus:outline-none cursor-pointer">
+        <i class="fas fa-moon text-gray-600 dark:hidden text-xl"></i>
+        <i class="fas fa-sun text-primary hidden dark:block text-xl"></i>
+    </button>
 
     <!-- Header / Navbar -->
     <header id="main-header" class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center transition-all duration-300 bg-transparent">
-        <div class="text-2xl font-bold tracking-wider text-dark">TEKKEN</div>
+        <div id="header-logo" class="text-2xl font-bold tracking-wider text-dark dark:text-white"></div>
         <div class="flex items-center">
-            <!-- Added Phone Number -->
-            <a href="tel:060444434444" class="hidden md:flex items-center font-bold text-dark mr-8 text-lg hover:text-gray-600 transition">
-                <i class="fas fa-phone mr-2"></i>(+060) 444 434 444
-            </a>
-            <button id="menu-btn" class="text-3xl text-dark hover:text-gray-600 transition focus:outline-none cursor-pointer">
+            <a id="header-phone" href="#" class="hidden md:flex items-center font-bold text-dark dark:text-white mr-8 text-lg hover:text-gray-600 dark:hover:text-primary transition"></a>
+            <button id="menu-btn" class="text-3xl text-dark dark:text-white hover:text-gray-600 dark:hover:text-primary transition focus:outline-none cursor-pointer">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -120,42 +128,34 @@
         <button id="close-btn" class="absolute top-8 right-8 text-3xl text-gray-400 hover:text-primary transition focus:outline-none cursor-pointer">
             <i class="fas fa-times"></i>
         </button>
-        <nav class="flex flex-col items-center space-y-6 text-xl font-bold">
+        <nav class="flex flex-col items-center space-y-6 text-xl font-bold" id="menu-nav">
             <a href="#home" class="text-white hover:text-primary transition menu-link">Home</a>
             <a href="#about" class="text-white hover:text-primary transition menu-link">About Me</a>
             <a href="#services" class="text-white hover:text-primary transition menu-link">What I Do</a>
             <a href="#resume" class="text-white hover:text-primary transition menu-link">Resume</a>
             <a href="#portfolio" class="text-white hover:text-primary transition menu-link">Portfolio</a>
             <a href="#faq" class="text-white hover:text-primary transition menu-link">FAQ</a>
-            <a href="#" class="text-primary transition menu-link">Client Speak</a>
             <a href="#contact" class="text-white hover:text-primary transition menu-link">Contact Me</a>
         </nav>
-        <div class="flex space-x-6 mt-12 text-white text-xl">
-            <a href="#" class="hover:text-primary transition"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="hover:text-primary transition"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="hover:text-primary transition"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="hover:text-primary transition"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="hover:text-primary transition"><i class="fab fa-dribbble"></i></a>
-        </div>
+        <div id="header-socials" class="flex space-x-6 mt-12 text-white text-xl"></div>
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="bg-primary min-h-screen flex items-center pt-20 pb-12 overflow-hidden relative">
+    <section id="home" class="bg-primary dark:bg-primary/95 min-h-screen flex items-center pt-20 pb-12 overflow-hidden relative transition-colors duration-300">
         <div class="container mx-auto px-6 relative z-10">
             <div class="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-8">
                 <!-- Text Content -->
                 <div class="lg:w-3/5 text-center lg:text-left">
-                    <h2 class="text-3xl md:text-4xl font-semibold text-dark mb-2">HI, I'M A FREELANCER</h2>
+                    <h2 id="hero-badge" class="text-3xl md:text-4xl font-semibold text-dark mb-2"></h2>
                     <h1 class="text-6xl md:text-8xl lg:text-[100px] font-bold text-dark leading-none mb-6 tracking-tight h-auto min-h-[1em]">
                         <span id="typed-text"></span><span class="animate-pulse font-light">|</span>
                     </h1>
-                    <p class="text-lg md:text-xl text-dark/80 mb-8 max-w-lg mx-auto lg:mx-0">based in Los Angeles, California.</p>
+                    <p id="hero-subtitle" class="text-lg md:text-xl text-dark/80 mb-8 max-w-lg mx-auto lg:mx-0"></p>
                     
-                    <!-- Added Contact Me Button next to View My Works -->
                     <div class="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
-                        <a href="#portfolio" class="inline-block bg-dark text-white px-8 py-4 rounded-full font-medium hover:bg-gray-700 transition duration-300 shadow-lg">View My Works</a>
-                        <a href="#contact" class="inline-flex items-center text-dark font-bold hover:text-gray-600 transition text-lg group border-b-2 border-transparent hover:border-dark pb-1">
-                            Contact Me <i class="fas fa-arrow-circle-down ml-2 text-xl group-hover:translate-y-1 transition-transform"></i>
+                        <a id="hero-btn1" href="#" class="inline-block bg-dark text-white px-8 py-4 rounded-full font-medium hover:bg-gray-700 transition duration-300 shadow-lg"></a>
+                        <a id="hero-btn2" href="#" class="inline-flex items-center text-dark font-bold hover:text-gray-600 transition text-lg group border-b-2 border-transparent hover:border-dark pb-1">
+                            <span id="hero-btn2-text"></span> <i class="fas fa-arrow-circle-down ml-2 text-xl group-hover:translate-y-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
@@ -163,430 +163,144 @@
                 <!-- Profile Image -->
                 <div class="lg:w-2/5 flex justify-center mt-10 lg:mt-0 relative">
                     <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px]">
-                        <!-- Dashed rotating border -->
                         <div class="absolute inset-[-15px] rounded-full border-[3px] border-dashed border-dark/30 animate-spin-slow"></div>
-                        <!-- Solid ring behind image -->
-                        <div class="absolute inset-2 rounded-full border-[10px] border-primary/50"></div>
-                        <!-- Image -->
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Tekken (Hammad Ahmed)" class="rounded-full w-full h-full object-cover relative z-10 grayscale hover:grayscale-0 transition duration-500 shadow-2xl border-4 border-primary">
+                        <div class="absolute inset-2 rounded-full border-[10px] border-primary/50 dark:border-dark/20 transition-colors duration-300"></div>
+                        <img id="hero-image" src="" alt="Profile" class="rounded-full w-full h-full object-cover relative z-10 grayscale hover:grayscale-0 transition duration-500 shadow-2xl border-4 border-primary">
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Scroll Down indicator -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce cursor-pointer">
             <a href="#about"><i class="fas fa-chevron-down text-dark text-xl"></i></a>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-white">
+    <section id="about" class="py-24 bg-white dark:bg-[#111418] transition-colors duration-300">
         <div class="container mx-auto px-6 max-w-6xl">
-            <!-- Section Header -->
             <div class="text-center mb-16 relative">
-                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">About Me</span>
-                <h2 class="text-4xl font-bold text-dark">Know Me More</h2>
+                <span id="about-badge" class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3"></span>
+                <h2 id="about-title" class="text-4xl font-bold text-dark dark:text-white"></h2>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-12 items-start">
-                <!-- Left Text -->
                 <div class="lg:w-2/3">
-                    <h3 class="text-2xl md:text-3xl font-bold text-dark mb-4 leading-tight">Hi, I'm <span class="border-b-4 border-primary pb-1">Tekken (Hammad Ahmed)</span></h3>
-                    <p class="text-lg leading-relaxed mb-6">I'm a designer & developer with a passion for web design. I enjoy developing simple, clean and slick websites that provide real value to the end user. Thousands of clients have procured exceptional results while working with me. Delivering work within time and budget which meets client's requirements is our moto.</p>
+                    <h3 class="text-2xl md:text-3xl font-bold text-dark dark:text-white mb-4 leading-tight">
+                        <span id="about-heading-prefix"></span> <span id="about-heading-highlight" class="border-b-4 border-primary pb-1"></span>
+                    </h3>
+                    <p id="about-description" class="text-lg leading-relaxed mb-6"></p>
                 </div>
                 
-                <!-- Right Experience Badge -->
                 <div class="lg:w-1/3 flex justify-center lg:justify-end items-center">
                     <div class="w-40 h-40 bg-primary rounded-full flex flex-col items-center justify-center text-dark shadow-xl">
-                        <span class="text-6xl font-bold leading-none">22</span>
-                        <span class="text-sm font-medium mt-1 uppercase tracking-widest text-center px-4">Years of<br>Experience</span>
+                        <span id="about-exp-num" class="text-6xl font-bold leading-none"></span>
+                        <span id="about-exp-text" class="text-sm font-medium mt-1 uppercase tracking-widest text-center px-4"></span>
                     </div>
                 </div>
             </div>
 
-            <!-- Info Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 pt-10 border-t border-gray-100">
-                <div>
-                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">Name:</p>
-                    <p class="text-lg font-bold text-dark">Hammad Ahmed</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">Email:</p>
-                    <p class="text-lg font-bold text-primary hover:underline cursor-pointer">chat@hammad.com</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">Date of birth:</p>
-                    <p class="text-lg font-bold text-dark">11 November, 1987</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">From:</p>
-                    <p class="text-lg font-bold text-dark">Los Angeles, USA.</p>
-                </div>
+            <div id="about-info-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 pt-10 border-t border-gray-100 dark:border-gray-800">
+                <!-- Injected via JS -->
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-24 bg-light">
+    <section id="services" class="py-24 bg-light dark:bg-[#1a1d21] transition-colors duration-300">
         <div class="container mx-auto px-6 max-w-6xl">
-            <!-- Section Header -->
             <div class="text-center mb-16 relative">
-                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">What I Do</span>
-                <h2 class="text-4xl font-bold text-dark">How I can help your next project</h2>
+                <span id="services-badge" class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3"></span>
+                <h2 id="services-title" class="text-4xl font-bold text-dark dark:text-white"></h2>
             </div>
-
-            <!-- Grid (Added fade-in-up animations) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Item 1 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow fade-in-up" style="transition-delay: 0ms;">
-                    <div class="text-primary text-4xl mb-6"><i class="fas fa-palette"></i></div>
-                    <h3 class="text-xl font-bold text-dark mb-3">Graphic Design</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-                </div>
-                <!-- Item 2 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow fade-in-up" style="transition-delay: 100ms;">
-                    <div class="text-primary text-4xl mb-6"><i class="fas fa-desktop"></i></div>
-                    <h3 class="text-xl font-bold text-dark mb-3">Web Design</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-                </div>
-                <!-- Item 3 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow fade-in-up" style="transition-delay: 200ms;">
-                    <div class="text-primary text-4xl mb-6"><i class="fas fa-pencil-ruler"></i></div>
-                    <h3 class="text-xl font-bold text-dark mb-3">UI/UX Design</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-                </div>
-                <!-- Item 4 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow fade-in-up" style="transition-delay: 0ms;">
-                    <div class="text-primary text-4xl mb-6"><i class="fas fa-mobile-alt"></i></div>
-                    <h3 class="text-xl font-bold text-dark mb-3">App Design & Develop</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-                </div>
-                <!-- Item 5 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow fade-in-up" style="transition-delay: 100ms;">
-                    <div class="text-primary text-4xl mb-6"><i class="fas fa-chart-line"></i></div>
-                    <h3 class="text-xl font-bold text-dark mb-3">Business Analysis</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-                </div>
-                <!-- Item 6 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow fade-in-up" style="transition-delay: 200ms;">
-                    <div class="text-primary text-4xl mb-6"><i class="fas fa-bullhorn"></i></div>
-                    <h3 class="text-xl font-bold text-dark mb-3">SEO Marketing</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-                </div>
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Injected via JS -->
             </div>
         </div>
     </section>
 
     <!-- Resume Section -->
-    <section id="resume" class="py-24 bg-white">
+    <section id="resume" class="py-24 bg-white dark:bg-[#111418] transition-colors duration-300">
         <div class="container mx-auto px-6 max-w-6xl">
-            <!-- Section Header -->
             <div class="text-center mb-16 relative">
-                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">Resume</span>
-                <h2 class="text-4xl font-bold text-dark">A summary of My Resume</h2>
+                <span id="resume-badge" class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3"></span>
+                <h2 id="resume-title" class="text-4xl font-bold text-dark dark:text-white"></h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 mb-16">
                 <!-- Education Column -->
                 <div>
-                    <h3 class="text-2xl font-bold text-dark mb-8">My Education</h3>
-                    <div class="border-l-2 border-primary border-opacity-30 ml-3">
-                        <!-- Item -->
-                        <div class="relative pl-8 mb-10 group">
-                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
-                            <h4 class="text-xl font-bold text-dark mb-1">Master in Computer Engineering</h4>
-                            <p class="text-sm text-gray-400 mb-3 font-medium">Harvard University / 2015 - 2017</p>
-                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
-                        </div>
-                        <!-- Item -->
-                        <div class="relative pl-8 mb-10 group">
-                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
-                            <h4 class="text-xl font-bold text-dark mb-1">Bachelor in Computer Engineering</h4>
-                            <p class="text-sm text-gray-400 mb-3 font-medium">University of California / 2014 - 2015</p>
-                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
-                        </div>
-                        <!-- Item -->
-                        <div class="relative pl-8 group">
-                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
-                            <h4 class="text-xl font-bold text-dark mb-1">International Science</h4>
-                            <p class="text-sm text-gray-400 mb-3 font-medium">Harvard University / 2013 - 2014</p>
-                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
-                        </div>
-                    </div>
+                    <h3 id="resume-edu-title" class="text-2xl font-bold text-dark dark:text-white mb-8"></h3>
+                    <div id="edu-list" class="border-l-2 border-primary border-opacity-30 ml-3"></div>
                 </div>
 
                 <!-- Experience Column -->
                 <div>
-                    <h3 class="text-2xl font-bold text-dark mb-8">My Experience</h3>
-                    <div class="border-l-2 border-primary border-opacity-30 ml-3">
-                        <!-- Item -->
-                        <div class="relative pl-8 mb-10 group">
-                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
-                            <h4 class="text-xl font-bold text-dark mb-1">Sr. Font End Developer</h4>
-                            <p class="text-sm text-gray-400 mb-3 font-medium">Apple Inc / 2020 - current</p>
-                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
-                        </div>
-                        <!-- Item -->
-                        <div class="relative pl-8 mb-10 group">
-                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
-                            <h4 class="text-xl font-bold text-dark mb-1">Jr. Font End Developer</h4>
-                            <p class="text-sm text-gray-400 mb-3 font-medium">Dribbble Inc / 2018 - 2020</p>
-                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
-                        </div>
-                        <!-- Item -->
-                        <div class="relative pl-8 group">
-                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
-                            <h4 class="text-xl font-bold text-dark mb-1">HTML Developer</h4>
-                            <p class="text-sm text-gray-400 mb-3 font-medium">Adobe Inc / 2017 - 2018</p>
-                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
-                        </div>
-                    </div>
+                    <h3 id="resume-exp-title" class="text-2xl font-bold text-dark dark:text-white mb-8"></h3>
+                    <div id="exp-list" class="border-l-2 border-primary border-opacity-30 ml-3"></div>
                 </div>
             </div>
 
             <!-- Skills -->
             <div>
-                <h3 class="text-2xl font-bold text-dark mb-8">My Skills</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-                    <!-- Skill -->
-                    <div>
-                        <div class="flex justify-between items-end mb-1">
-                            <span class="font-bold text-dark">Web Design</span>
-                            <span class="text-sm font-medium">65%</span>
-                        </div>
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" style="width: 65%"></div>
-                        </div>
-                    </div>
-                    <!-- Skill -->
-                    <div>
-                        <div class="flex justify-between items-end mb-1">
-                            <span class="font-bold text-dark">React JS</span>
-                            <span class="text-sm font-medium">70%</span>
-                        </div>
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" style="width: 70%"></div>
-                        </div>
-                    </div>
-                    <!-- Skill -->
-                    <div>
-                        <div class="flex justify-between items-end mb-1">
-                            <span class="font-bold text-dark">HTML/CSS</span>
-                            <span class="text-sm font-medium">95%</span>
-                        </div>
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    <!-- Skill -->
-                    <div>
-                        <div class="flex justify-between items-end mb-1">
-                            <span class="font-bold text-dark">Angular</span>
-                            <span class="text-sm font-medium">60%</span>
-                        </div>
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" style="width: 60%"></div>
-                        </div>
-                    </div>
-                    <!-- Skill -->
-                    <div>
-                        <div class="flex justify-between items-end mb-1">
-                            <span class="font-bold text-dark">JavaScript</span>
-                            <span class="text-sm font-medium">80%</span>
-                        </div>
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" style="width: 80%"></div>
-                        </div>
-                    </div>
-                    <!-- Skill -->
-                    <div>
-                        <div class="flex justify-between items-end mb-1">
-                            <span class="font-bold text-dark">Bootstrap</span>
-                            <span class="text-sm font-medium">99%</span>
-                        </div>
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" style="width: 99%"></div>
-                        </div>
-                    </div>
-                </div>
+                <h3 id="resume-skill-title" class="text-2xl font-bold text-dark dark:text-white mb-8"></h3>
+                <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6"></div>
             </div>
 
             <!-- Download Button -->
             <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center justify-center border-2 border-gray-300 text-gray-600 px-8 py-3 rounded-full font-medium hover:bg-dark hover:border-dark hover:text-white transition duration-300">
-                    Download CV <i class="fas fa-download ml-2"></i>
+                <a id="resume-btn" href="#" class="inline-flex items-center justify-center border-2 border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 px-8 py-3 rounded-full font-medium hover:bg-dark hover:border-dark hover:text-white dark:hover:bg-primary dark:hover:border-primary dark:hover:text-dark transition duration-300">
+                    <span id="resume-btn-text"></span> <i class="fas fa-download ml-2"></i>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-24 bg-light">
+    <section id="portfolio" class="py-24 bg-light dark:bg-[#1a1d21] transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-            <!-- Section Header -->
             <div class="text-center mb-10 relative">
-                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">Portfolio</span>
-                <h2 class="text-4xl font-bold text-dark">Some of my most recent projects</h2>
+                <span id="portfolio-badge" class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3"></span>
+                <h2 id="portfolio-title" class="text-4xl font-bold text-dark dark:text-white"></h2>
             </div>
-
-            <!-- Filters -->
-            <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12 text-sm sm:text-base font-medium">
-                <button class="text-primary border-b-2 border-primary pb-1">All</button>
-                <button class="text-gray-500 hover:text-primary transition-colors pb-1 border-b-2 border-transparent hover:border-primary">Design</button>
-                <button class="text-gray-500 hover:text-primary transition-colors pb-1 border-b-2 border-transparent hover:border-primary">Brand</button>
-                <button class="text-gray-500 hover:text-primary transition-colors pb-1 border-b-2 border-transparent hover:border-primary">Photos</button>
-            </div>
-
-            <!-- Grid (Added fade-in-up animations) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                <!-- Project 1 -->
-                <div class="relative group overflow-hidden aspect-square bg-white fade-in-up" style="transition-delay: 0ms;">
-                    <img src="https://images.unsplash.com/photo-1501139083538-0139583c060f?q=80&w=600&auto=format&fit=crop" alt="Project 1" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
-                        <span class="text-primary text-sm">Category</span>
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="relative group overflow-hidden aspect-square bg-dark fade-in-up" style="transition-delay: 100ms;">
-                    <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?q=80&w=600&auto=format&fit=crop" alt="Project 2" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
-                        <span class="text-primary text-sm">Category</span>
-                    </div>
-                </div>
-                <!-- Project 3 (Replaced broken image) -->
-                <div class="relative group overflow-hidden aspect-square bg-pink-100 fade-in-up" style="transition-delay: 200ms;">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop" alt="Project 3" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
-                        <span class="text-primary text-sm">Category</span>
-                    </div>
-                </div>
-                <!-- Project 4 -->
-                <div class="relative group overflow-hidden aspect-square bg-teal-700 fade-in-up" style="transition-delay: 0ms;">
-                    <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=600&auto=format&fit=crop" alt="Project 4" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
-                        <span class="text-primary text-sm">Category</span>
-                    </div>
-                </div>
-                <!-- Project 5 -->
-                <div class="relative group overflow-hidden aspect-square bg-blue-500 fade-in-up" style="transition-delay: 100ms;">
-                    <img src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?q=80&w=600&auto=format&fit=crop" alt="Project 5" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
-                        <span class="text-primary text-sm">Category</span>
-                    </div>
-                </div>
-                <!-- Project 6 -->
-                <div class="relative group overflow-hidden aspect-square bg-primary fade-in-up" style="transition-delay: 200ms;">
-                    <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=600&auto=format&fit=crop" alt="Project 6" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
-                        <span class="text-primary text-sm">Category</span>
-                    </div>
-                </div>
-            </div>
+            <div id="portfolio-filters" class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12 text-sm sm:text-base font-medium"></div>
+            <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"></div>
         </div>
     </section>
 
-    <!-- Call to Action Section (Added Parallax Background) -->
-    <section class="py-24 text-center relative z-10 bg-fixed bg-center bg-cover" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1920&auto=format&fit=crop');">
-        <!-- Semi-transparent overlay for parallax -->
-        <div class="absolute inset-0 bg-darker/85 z-0"></div>
+    <!-- Call to Action Section -->
+    <section id="cta-section" class="py-24 text-center relative z-10 bg-fixed bg-center bg-cover">
+        <div class="absolute inset-0 bg-darker/85 dark:bg-black/90 z-0 transition-colors duration-300"></div>
         <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">Interested in working with me?</h2>
-            <a href="#contact" class="inline-block bg-primary text-dark px-10 py-4 rounded-full font-bold hover:bg-white transition duration-300 shadow-lg text-sm uppercase tracking-wider">Hire Me!</a>
+            <h2 id="cta-title" class="text-3xl md:text-4xl font-bold text-white mb-8"></h2>
+            <a id="cta-btn" href="#" class="inline-block bg-primary text-dark px-10 py-4 rounded-full font-bold hover:bg-white transition duration-300 shadow-lg text-sm uppercase tracking-wider"></a>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="py-24 bg-white">
+    <section id="faq" class="py-24 bg-white dark:bg-[#111418] transition-colors duration-300">
         <div class="container mx-auto px-6 max-w-6xl">
-            <!-- Section Header -->
             <div class="text-left mb-12 relative md:text-left">
-                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">FAQ</span>
-                <h2 class="text-4xl font-bold text-dark">Have any questions?</h2>
+                <span id="faq-badge" class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3"></span>
+                <h2 id="faq-title" class="text-4xl font-bold text-dark dark:text-white"></h2>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-12 items-center">
                 <!-- Accordion Left -->
-                <div class="lg:w-3/5 w-full">
-                    <!-- Item 1 (Open by default) -->
-                    <details class="mb-4 group border border-gray-200 rounded-md" open>
-                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white group-open:text-primary transition-colors">
-                            <span class="text-dark group-open:text-primary">What is your design process?</span>
-                            <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
-                                <i class="fas fa-chevron-down"></i>
-                            </span>
-                        </summary>
-                        <div class="p-5 pt-0 text-sm text-gray-500 leading-relaxed border-t border-gray-100 mt-2">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                        </div>
-                    </details>
-
-                    <!-- Item 2 -->
-                    <details class="mb-4 group border border-gray-200 rounded-md">
-                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white transition-colors">
-                            <span class="text-dark group-open:text-primary">How much does a website cost?</span>
-                            <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
-                                <i class="fas fa-chevron-down"></i>
-                            </span>
-                        </summary>
-                        <div class="p-5 pt-0 text-sm text-gray-500 leading-relaxed border-t border-gray-100 mt-2">
-                            The cost varies depending on the complexity and requirements of your project. Let's discuss your needs to provide an accurate estimate.
-                        </div>
-                    </details>
-
-                    <!-- Item 3 -->
-                    <details class="mb-4 group border border-gray-200 rounded-md">
-                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white transition-colors">
-                            <span class="text-dark group-open:text-primary">Do you provide ongoing support?</span>
-                            <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
-                                <i class="fas fa-chevron-down"></i>
-                            </span>
-                        </summary>
-                        <div class="p-5 pt-0 text-sm text-gray-500 leading-relaxed border-t border-gray-100 mt-2">
-                            Yes, I offer maintenance and ongoing support packages to ensure your website remains up-to-date and functions smoothly.
-                        </div>
-                    </details>
-
-                    <!-- Item 4 -->
-                    <details class="mb-4 group border border-gray-200 rounded-md">
-                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white transition-colors">
-                            <span class="text-dark group-open:text-primary">What payment methods do you accept?</span>
-                            <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
-                                <i class="fas fa-chevron-down"></i>
-                            </span>
-                        </summary>
-                        <div class="p-5 pt-0 text-sm text-gray-500 leading-relaxed border-t border-gray-100 mt-2">
-                            I accept bank transfers, PayPal, and major credit cards through secure invoicing platforms.
-                        </div>
-                    </details>
-                </div>
+                <div id="faq-list" class="lg:w-3/5 w-full"></div>
 
                 <!-- Illustration Right -->
                 <div class="lg:w-2/5 flex justify-center lg:justify-end">
-                    <!-- Custom SVG mimicking the large lightbulb -->
-                    <svg width="250" height="250" viewBox="0 0 100 100" class="text-primary fill-current filter drop-shadow-xl">
-                        <!-- Radiant lines -->
-                        <line x1="10" y1="20" x2="25" y2="35" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
-                        <line x1="50" y1="5" x2="50" y2="20" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
-                        <line x1="90" y1="20" x2="75" y2="35" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
-                        <line x1="5" y1="50" x2="20" y2="50" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
-                        <line x1="95" y1="50" x2="80" y2="50" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
-                        
-                        <!-- Bulb body -->
-                        <path d="M50 25 C30 25, 25 45, 35 60 C40 67, 40 75, 40 75 L60 75 C60 75, 60 67, 65 60 C75 45, 70 25, 50 25 Z" fill="#f5df4e"/>
-                        
-                        <!-- Question mark inside bulb -->
-                        <text x="50" y="55" font-family="Arial" font-size="28" font-weight="bold" fill="white" text-anchor="middle">?</text>
-                        
-                        <!-- Base -->
-                        <rect x="42" y="77" width="16" height="5" fill="#333" rx="2"/>
-                        <rect x="42" y="84" width="16" height="5" fill="#333" rx="2"/>
-                        <path d="M44 91 L56 91 L53 97 L47 97 Z" fill="#333"/>
+                    <svg width="250" height="250" viewBox="0 0 100 100" class="text-primary fill-current filter drop-shadow-xl dark:drop-shadow-none">
+                        <line x1="10" y1="20" x2="25" y2="35" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="50" y1="5" x2="50" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="90" y1="20" x2="75" y2="35" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="5" y1="50" x2="20" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="95" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M50 25 C30 25, 25 45, 35 60 C40 67, 40 75, 40 75 L60 75 C60 75, 60 67, 65 60 C75 45, 70 25, 50 25 Z" fill="currentColor"/>
+                        <text x="50" y="55" font-family="Arial" font-size="28" font-weight="bold" fill="white" class="dark:fill-gray-900" text-anchor="middle">?</text>
+                        <rect x="42" y="77" width="16" height="5" fill="#333" class="dark:fill-gray-600" rx="2"/>
+                        <rect x="42" y="84" width="16" height="5" fill="#333" class="dark:fill-gray-600" rx="2"/>
+                        <path d="M44 91 L56 91 L53 97 L47 97 Z" fill="#333" class="dark:fill-gray-600"/>
                     </svg>
                 </div>
             </div>
@@ -594,104 +308,71 @@
     </section>
 
     <!-- Testimonial Section -->
-    <section class="py-24 bg-gray-500 text-white relative">
+    <section class="py-24 bg-gray-500 dark:bg-[#1a1d21] text-white relative transition-colors duration-300">
         <div class="container mx-auto px-6 max-w-4xl text-center">
-            <!-- Section Header -->
             <div class="mb-12">
-                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">Testimonial</span>
-                <h2 class="text-4xl font-bold">What Some of my Clients Say</h2>
+                <span id="test-badge" class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3"></span>
+                <h2 id="test-title" class="text-4xl font-bold"></h2>
             </div>
-
-            <!-- Quote Container -->
             <div class="mt-10">
                 <div class="text-primary text-5xl opacity-50 mb-6">
                     <i class="fas fa-quote-left"></i>
                 </div>
-                <p class="text-xl md:text-2xl font-medium leading-relaxed mb-10 px-4 md:px-12">
-                    "Callum is a highly skilled professional with an eye for detail. The end result exceeded our expectations. I would highly recommend him to anyone looking for a top-tier designer."
-                </p>
-                
-                <!-- Client Info -->
+                <p id="test-quote" class="text-xl md:text-2xl font-medium leading-relaxed mb-10 px-4 md:px-12"></p>
                 <div class="flex flex-col items-center">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="w-16 h-16 rounded-full border-2 border-primary mb-4 shadow-lg">
-                    <h5 class="font-bold text-lg">Dennis Jacques</h5>
-                    <span class="text-sm text-gray-300">User from USA</span>
+                    <img id="test-img" src="" alt="Client" class="w-16 h-16 rounded-full border-2 border-primary mb-4 shadow-lg">
+                    <h5 id="test-name" class="font-bold text-lg"></h5>
+                    <span id="test-loc" class="text-sm text-gray-300 dark:text-gray-400"></span>
                 </div>
-
-                <!-- Slider Dots (Static visual only) -->
                 <div class="flex justify-center space-x-2 mt-8">
                     <span class="w-3 h-3 rounded-full bg-primary"></span>
-                    <span class="w-3 h-3 rounded-full bg-white opacity-40"></span>
-                    <span class="w-3 h-3 rounded-full bg-white opacity-40"></span>
+                    <span class="w-3 h-3 rounded-full bg-white opacity-40 dark:bg-gray-600"></span>
+                    <span class="w-3 h-3 rounded-full bg-white opacity-40 dark:bg-gray-600"></span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-primary text-dark">
+    <section id="contact" class="py-24 bg-primary dark:bg-primary/95 text-dark relative transition-colors duration-300">
         <div class="container mx-auto px-6 max-w-6xl">
             <div class="flex flex-col lg:flex-row gap-16">
-                
                 <!-- Left Info -->
                 <div class="lg:w-1/2">
-                    <h2 class="text-3xl font-bold mb-6">Let's get in touch</h2>
-                    <p class="text-lg leading-relaxed mb-8 text-dark/80">
-                        I enjoy discussing new projects and design challenges. Please share as much info, as possible so we can get the most out of our first catch-up.
-                    </p>
+                    <h2 id="contact-title" class="text-3xl font-bold mb-6"></h2>
+                    <p id="contact-desc" class="text-lg leading-relaxed mb-8 text-dark/80"></p>
                     
                     <div class="mb-8">
-                        <h4 class="font-bold text-xl mb-1">Living In:</h4>
-                        <p class="text-dark/80">30 Shambles, Settlement, UK.</p>
+                        <h4 id="contact-living-title" class="font-bold text-xl mb-1"></h4>
+                        <p id="contact-living-desc" class="text-dark/80"></p>
                     </div>
                     
                     <div class="mb-8">
-                        <h4 class="font-bold text-xl mb-1">Call:</h4>
-                        <p class="text-dark/80">(+060) 444 434 444</p>
+                        <h4 id="contact-call-title" class="font-bold text-xl mb-1"></h4>
+                        <p id="contact-call-desc" class="text-dark/80"></p>
                     </div>
-
-                    <!-- Social Icons -->
-                    <div class="flex space-x-4 mt-8">
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
-                            <i class="fab fa-dribbble"></i>
-                        </a>
-                    </div>
+                    <div id="contact-socials" class="flex space-x-4 mt-8"></div>
                 </div>
 
                 <!-- Right Form -->
                 <div class="lg:w-1/2">
-                    <h2 class="text-3xl font-bold mb-8">Estimate your Project?</h2>
+                    <h2 id="contact-form-title" class="text-3xl font-bold mb-8"></h2>
                     <form class="space-y-8">
                         <div>
-                            <label for="name" class="block text-sm font-semibold mb-2">What is Your Name:</label>
+                            <label id="form-label-name" for="name" class="block text-sm font-semibold mb-2"></label>
                             <input type="text" id="name" class="w-full form-input-custom text-lg py-2">
                         </div>
-                        
                         <div>
-                            <label for="email" class="block text-sm font-semibold mb-2">Your Email Address:</label>
+                            <label id="form-label-email" for="email" class="block text-sm font-semibold mb-2"></label>
                             <input type="email" id="email" class="w-full form-input-custom text-lg py-2">
                         </div>
-                        
                         <div>
-                            <label for="message" class="block text-sm font-semibold mb-2">How can I Help you?:</label>
+                            <label id="form-label-message" for="message" class="block text-sm font-semibold mb-2"></label>
                             <textarea id="message" rows="3" class="w-full form-input-custom text-lg py-2 resize-none"></textarea>
                         </div>
-                        
                         <div class="pt-4 text-center lg:text-left">
-                            <button type="submit" class="bg-dark text-white px-10 py-4 rounded-full font-bold hover:bg-gray-800 transition duration-300 shadow-lg flex items-center justify-center space-x-2 mx-auto lg:mx-0">
-                                <span>Send</span>
+                            <button type="submit" class="bg-dark text-white px-10 py-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-black transition duration-300 shadow-lg flex items-center justify-center space-x-2 mx-auto lg:mx-0">
+                                <span id="form-btn-text"></span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -704,12 +385,354 @@
     <!-- Footer -->
     <footer class="bg-darker text-gray-400 py-8 border-t border-gray-800">
         <div class="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row justify-between items-center text-sm">
-            <p class="mb-4 md:mb-0">Copyright © 2023 <a href="#" class="text-white hover:text-primary font-semibold">Tekken (Hammad Ahmed)</a>. All Rights Reserved.</p>
-            <p>Designed by <a href="#" class="text-white hover:text-primary font-semibold">Tekken (Hammad Ahmed)</a></p>
+            <p class="mb-4 md:mb-0">Copyright © <span id="footer-year"></span> <a href="#" id="footer-name1" class="text-white hover:text-primary font-semibold transition-colors"></a>. All Rights Reserved.</p>
+            <p>Designed by <a href="#" id="footer-name2" class="text-white hover:text-primary font-semibold transition-colors"></a></p>
         </div>
     </footer>
 
     <script>
+        /**
+         * ==========================================
+         * TEMPLATE CONFIGURATION (JSON OBJECT)
+         * Modify all site details, colors, and content below
+         * ==========================================
+         */
+        const PORTFOLIO_DATA = {
+            config: {
+                themeColor: "yellow", // Built-in options: 'yellow', 'blue', 'green', 'red', 'purple'
+                darkModeDefault: false // true or false
+            },
+            header: {
+                title: "TEKKEN",
+                phone: "(+060) 444 434 444"
+            },
+            hero: {
+                badge: "HI, I'M A FREELANCER",
+                typedWords: ["DESIGNER", "DEVELOPER", "TEKKEN"],
+                subtitle: "based in Los Angeles, California.",
+                btn1Text: "View My Works",
+                btn1Link: "#portfolio",
+                btn2Text: "Contact Me",
+                btn2Link: "#contact",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop"
+            },
+            about: {
+                badge: "About Me",
+                title: "Know Me More",
+                headingPrefix: "Hi, I'm",
+                headingHighlight: "Tekken (Hammad Ahmed)",
+                description: "I'm a designer & developer with a passion for web design. I enjoy developing simple, clean and slick websites that provide real value to the end user. Thousands of clients have procured exceptional results while working with me. Delivering work within time and budget which meets client's requirements is our moto.",
+                experienceNum: "22",
+                experienceText: "Years of<br>Experience",
+                infoGrid: [
+                    { label: "Name:", value: "Hammad Ahmed", isLink: false },
+                    { label: "Email:", value: "chat@hammad.com", isLink: true, link: "mailto:chat@hammad.com" },
+                    { label: "Date of birth:", value: "11 November, 1987", isLink: false },
+                    { label: "From:", value: "Los Angeles, USA.", isLink: false }
+                ]
+            },
+            servicesSection: {
+                badge: "What I Do",
+                title: "How I can help your next project"
+            },
+            services: [
+                { icon: "fas fa-palette", title: "Graphic Design", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text." },
+                { icon: "fas fa-desktop", title: "Web Design", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text." },
+                { icon: "fas fa-pencil-ruler", title: "UI/UX Design", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text." },
+                { icon: "fas fa-mobile-alt", title: "App Design & Develop", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text." },
+                { icon: "fas fa-chart-line", title: "Business Analysis", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text." },
+                { icon: "fas fa-bullhorn", title: "SEO Marketing", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text." }
+            ],
+            resumeSection: {
+                badge: "Resume",
+                title: "A summary of My Resume",
+                eduTitle: "My Education",
+                expTitle: "My Experience",
+                skillTitle: "My Skills",
+                btnText: "Download CV",
+                btnLink: "#"
+            },
+            resume: {
+                education: [
+                    { title: "Master in Computer Engineering", place: "Harvard University / 2015 - 2017", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text." },
+                    { title: "Bachelor in Computer Engineering", place: "University of California / 2014 - 2015", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text." },
+                    { title: "International Science", place: "Harvard University / 2013 - 2014", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text." }
+                ],
+                experience: [
+                    { title: "Sr. Font End Developer", place: "Apple Inc / 2020 - current", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text." },
+                    { title: "Jr. Font End Developer", place: "Dribbble Inc / 2018 - 2020", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text." },
+                    { title: "HTML Developer", place: "Adobe Inc / 2017 - 2018", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text." }
+                ],
+                skills: [
+                    { name: "Web Design", percentage: 65 },
+                    { name: "React JS", percentage: 70 },
+                    { name: "HTML/CSS", percentage: 95 },
+                    { name: "Angular", percentage: 60 },
+                    { name: "JavaScript", percentage: 80 },
+                    { name: "Bootstrap", percentage: 99 }
+                ]
+            },
+            portfolioSection: {
+                badge: "Portfolio",
+                title: "Some of my most recent projects",
+                filters: ["All", "Design", "Brand", "Photos"]
+            },
+            portfolio: [
+                { title: "Project 1", category: "Category", image: "https://images.unsplash.com/photo-1501139083538-0139583c060f?q=80&w=600&auto=format&fit=crop" },
+                { title: "Project 2", category: "Category", image: "https://images.unsplash.com/photo-1493612276216-ee3925520721?q=80&w=600&auto=format&fit=crop" },
+                { title: "Project 3", category: "Category", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop" },
+                { title: "Project 4", category: "Category", image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=600&auto=format&fit=crop" },
+                { title: "Project 5", category: "Category", image: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?q=80&w=600&auto=format&fit=crop" },
+                { title: "Project 6", category: "Category", image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=600&auto=format&fit=crop" }
+            ],
+            cta: {
+                title: "Interested in working with me?",
+                btnText: "Hire Me!",
+                btnLink: "#contact",
+                bgImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1920&auto=format&fit=crop"
+            },
+            faqSection: {
+                badge: "FAQ",
+                title: "Have any questions?"
+            },
+            faq: [
+                { q: "What is your design process?", a: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." },
+                { q: "How much does a website cost?", a: "The cost varies depending on the complexity and requirements of your project. Let's discuss your needs to provide an accurate estimate." },
+                { q: "Do you provide ongoing support?", a: "Yes, I offer maintenance and ongoing support packages to ensure your website remains up-to-date and functions smoothly." },
+                { q: "What payment methods do you accept?", a: "I accept bank transfers, PayPal, and major credit cards through secure invoicing platforms." }
+            ],
+            testimonialSection: {
+                badge: "Testimonial",
+                title: "What Some of my Clients Say"
+            },
+            testimonial: {
+                quote: "Tekken is a highly skilled professional with an eye for detail. The end result exceeded our expectations. I would highly recommend him to anyone looking for a top-tier designer.",
+                name: "Dennis Jacques",
+                location: "User from USA",
+                image: "https://randomuser.me/api/portraits/men/32.jpg"
+            },
+            contact: {
+                titleLeft: "Let's get in touch",
+                description: "I enjoy discussing new projects and design challenges. Please share as much info, as possible so we can get the most out of our first catch-up.",
+                livingTitle: "Living In:",
+                livingDesc: "30 Shambles, Settlement, UK.",
+                callTitle: "Call:",
+                callDesc: "(+060) 444 434 444",
+                titleRight: "Estimate your Project?",
+                formLabels: ["What is Your Name:", "Your Email Address:", "How can I Help you?:"],
+                formBtnText: "Send",
+                socials: [
+                    { icon: "fab fa-twitter", url: "#" },
+                    { icon: "fab fa-facebook-f", url: "#" },
+                    { icon: "fab fa-instagram", url: "#" },
+                    { icon: "fab fa-github", url: "#" },
+                    { icon: "fab fa-dribbble", url: "#" }
+                ]
+            },
+            footer: {
+                year: "2023",
+                name: "Tekken (Hammad Ahmed)"
+            }
+        };
+
+        const THEME_COLORS = {
+            'yellow': 'f5df4e',
+            'blue': '3b82f6',
+            'green': '10b981',
+            'red': 'ef4444',
+            'purple': 'a855f7'
+        };
+
+        // Render DOM based on JSON
+        function renderPortfolio() {
+            // Apply Base Configs
+            document.documentElement.classList.add(`theme-${PORTFOLIO_DATA.config.themeColor}`);
+            if (PORTFOLIO_DATA.config.darkModeDefault || localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+            
+            document.title = `${PORTFOLIO_DATA.header.title} - Freelancer Portfolio`;
+            document.getElementById('page-title').textContent = document.title;
+            const themeHex = THEME_COLORS[PORTFOLIO_DATA.config.themeColor] || THEME_COLORS['yellow'];
+            document.getElementById('dynamic-favicon').href = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23${themeHex}'/%3E%3Ctext x='50' y='74' font-family='Poppins, sans-serif' font-size='65' font-weight='800' fill='%23212529' text-anchor='middle'%3E${PORTFOLIO_DATA.header.title.charAt(0).toUpperCase()}%3C/text%3E%3C/svg%3E`;
+
+            // Header & Hero
+            document.getElementById('header-logo').textContent = PORTFOLIO_DATA.header.title;
+            document.getElementById('header-phone').innerHTML = `<i class="fas fa-phone mr-2"></i>${PORTFOLIO_DATA.header.phone}`;
+            document.getElementById('header-phone').href = `tel:${PORTFOLIO_DATA.header.phone.replace(/[^0-9+]/g, '')}`;
+            document.getElementById('hero-badge').textContent = PORTFOLIO_DATA.hero.badge;
+            document.getElementById('hero-subtitle').textContent = PORTFOLIO_DATA.hero.subtitle;
+            document.getElementById('hero-btn1').textContent = PORTFOLIO_DATA.hero.btn1Text;
+            document.getElementById('hero-btn1').href = PORTFOLIO_DATA.hero.btn1Link;
+            document.getElementById('hero-btn2-text').textContent = PORTFOLIO_DATA.hero.btn2Text;
+            document.getElementById('hero-btn2').href = PORTFOLIO_DATA.hero.btn2Link;
+            document.getElementById('hero-image').src = PORTFOLIO_DATA.hero.image;
+
+            // About
+            document.getElementById('about-badge').textContent = PORTFOLIO_DATA.about.badge;
+            document.getElementById('about-title').textContent = PORTFOLIO_DATA.about.title;
+            document.getElementById('about-heading-prefix').textContent = PORTFOLIO_DATA.about.headingPrefix;
+            document.getElementById('about-heading-highlight').textContent = PORTFOLIO_DATA.about.headingHighlight;
+            document.getElementById('about-description').textContent = PORTFOLIO_DATA.about.description;
+            document.getElementById('about-exp-num').textContent = PORTFOLIO_DATA.about.experienceNum;
+            document.getElementById('about-exp-text').innerHTML = PORTFOLIO_DATA.about.experienceText;
+
+            const infoGrid = document.getElementById('about-info-grid');
+            infoGrid.innerHTML = PORTFOLIO_DATA.about.infoGrid.map(item => `
+                <div>
+                    <p class="text-gray-400 dark:text-gray-500 text-sm mb-1 uppercase font-semibold tracking-wider">${item.label}</p>
+                    ${item.isLink 
+                        ? `<a href="${item.link}" class="text-lg font-bold text-primary hover:underline cursor-pointer">${item.value}</a>` 
+                        : `<p class="text-lg font-bold text-dark dark:text-white">${item.value}</p>`}
+                </div>
+            `).join('');
+
+            // Services
+            document.getElementById('services-badge').textContent = PORTFOLIO_DATA.servicesSection.badge;
+            document.getElementById('services-title').textContent = PORTFOLIO_DATA.servicesSection.title;
+            const servicesGrid = document.getElementById('services-grid');
+            servicesGrid.innerHTML = PORTFOLIO_DATA.services.map((srv, i) => `
+                <div class="bg-white dark:bg-[#212529] border border-transparent dark:border-gray-800 p-8 rounded-xl shadow-sm dark:shadow-none hover:shadow-md transition-shadow fade-in-up" style="transition-delay: ${(i%3)*100}ms;">
+                    <div class="text-primary text-4xl mb-6"><i class="${srv.icon}"></i></div>
+                    <h3 class="text-xl font-bold text-dark dark:text-white mb-3">${srv.title}</h3>
+                    <p class="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">${srv.description}</p>
+                </div>
+            `).join('');
+
+            // Resume
+            document.getElementById('resume-badge').textContent = PORTFOLIO_DATA.resumeSection.badge;
+            document.getElementById('resume-title').textContent = PORTFOLIO_DATA.resumeSection.title;
+            document.getElementById('resume-edu-title').textContent = PORTFOLIO_DATA.resumeSection.eduTitle;
+            document.getElementById('resume-exp-title').textContent = PORTFOLIO_DATA.resumeSection.expTitle;
+            document.getElementById('resume-skill-title').textContent = PORTFOLIO_DATA.resumeSection.skillTitle;
+            document.getElementById('resume-btn-text').textContent = PORTFOLIO_DATA.resumeSection.btnText;
+            document.getElementById('resume-btn').href = PORTFOLIO_DATA.resumeSection.btnLink;
+
+            const eduList = document.getElementById('edu-list');
+            eduList.innerHTML = PORTFOLIO_DATA.resume.education.map(item => `
+                <div class="relative pl-8 mb-10 group">
+                    <span class="absolute w-4 h-4 rounded-full bg-white dark:bg-[#111418] border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
+                    <h4 class="text-xl font-bold text-dark dark:text-white mb-1">${item.title}</h4>
+                    <p class="text-sm text-gray-400 dark:text-gray-500 mb-3 font-medium">${item.place}</p>
+                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">${item.description}</p>
+                </div>
+            `).join('');
+
+            const expList = document.getElementById('exp-list');
+            expList.innerHTML = PORTFOLIO_DATA.resume.experience.map(item => `
+                <div class="relative pl-8 mb-10 group">
+                    <span class="absolute w-4 h-4 rounded-full bg-white dark:bg-[#111418] border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
+                    <h4 class="text-xl font-bold text-dark dark:text-white mb-1">${item.title}</h4>
+                    <p class="text-sm text-gray-400 dark:text-gray-500 mb-3 font-medium">${item.place}</p>
+                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">${item.description}</p>
+                </div>
+            `).join('');
+
+            const skillsGrid = document.getElementById('skills-grid');
+            skillsGrid.innerHTML = PORTFOLIO_DATA.resume.skills.map(skill => `
+                <div>
+                    <div class="flex justify-between items-end mb-1">
+                        <span class="font-bold text-dark dark:text-white">${skill.name}</span>
+                        <span class="text-sm font-medium dark:text-gray-300">${skill.percentage}%</span>
+                    </div>
+                    <div class="progress-bar-wrap dark:bg-gray-800">
+                        <div class="progress-bar" style="width: ${skill.percentage}%"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Portfolio
+            document.getElementById('portfolio-badge').textContent = PORTFOLIO_DATA.portfolioSection.badge;
+            document.getElementById('portfolio-title').textContent = PORTFOLIO_DATA.portfolioSection.title;
+            
+            const portFilters = document.getElementById('portfolio-filters');
+            portFilters.innerHTML = PORTFOLIO_DATA.portfolioSection.filters.map((filter, i) => 
+                i === 0 
+                ? `<button class="text-primary border-b-2 border-primary pb-1">${filter}</button>` 
+                : `<button class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors pb-1 border-b-2 border-transparent hover:border-primary">${filter}</button>`
+            ).join('');
+
+            const portGrid = document.getElementById('portfolio-grid');
+            portGrid.innerHTML = PORTFOLIO_DATA.portfolio.map((item, i) => `
+                <div class="relative group overflow-hidden aspect-square bg-darker fade-in-up" style="transition-delay: ${(i%3)*100}ms;">
+                    <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-darker bg-opacity-80 dark:bg-opacity-90 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="text-white text-xl font-bold mb-1">${item.title}</h4>
+                        <span class="text-primary text-sm">${item.category}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // CTA
+            document.getElementById('cta-title').textContent = PORTFOLIO_DATA.cta.title;
+            document.getElementById('cta-btn').textContent = PORTFOLIO_DATA.cta.btnText;
+            document.getElementById('cta-btn').href = PORTFOLIO_DATA.cta.btnLink;
+            document.getElementById('cta-section').style.backgroundImage = `url('${PORTFOLIO_DATA.cta.bgImage}')`;
+
+            // FAQ
+            document.getElementById('faq-badge').textContent = PORTFOLIO_DATA.faqSection.badge;
+            document.getElementById('faq-title').textContent = PORTFOLIO_DATA.faqSection.title;
+            const faqList = document.getElementById('faq-list');
+            faqList.innerHTML = PORTFOLIO_DATA.faq.map((item, i) => `
+                <details class="mb-4 group border border-gray-200 dark:border-gray-800 rounded-md" ${i === 0 ? 'open' : ''}>
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white dark:bg-[#212529] group-open:text-primary transition-colors rounded-md">
+                        <span class="text-dark dark:text-white group-open:text-primary">${item.q}</span>
+                        <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </summary>
+                    <div class="p-5 pt-0 text-sm text-gray-500 dark:text-gray-400 leading-relaxed border-t border-gray-100 dark:border-gray-800 mt-2 bg-white dark:bg-[#212529] rounded-b-md">
+                        ${item.a}
+                    </div>
+                </details>
+            `).join('');
+
+            // Testimonials
+            document.getElementById('test-badge').textContent = PORTFOLIO_DATA.testimonialSection.badge;
+            document.getElementById('test-title').textContent = PORTFOLIO_DATA.testimonialSection.title;
+            document.getElementById('test-quote').textContent = `"${PORTFOLIO_DATA.testimonial.quote}"`;
+            document.getElementById('test-name').textContent = PORTFOLIO_DATA.testimonial.name;
+            document.getElementById('test-loc').textContent = PORTFOLIO_DATA.testimonial.location;
+            document.getElementById('test-img').src = PORTFOLIO_DATA.testimonial.image;
+
+            // Contact
+            document.getElementById('contact-title').textContent = PORTFOLIO_DATA.contact.titleLeft;
+            document.getElementById('contact-desc').textContent = PORTFOLIO_DATA.contact.description;
+            document.getElementById('contact-living-title').textContent = PORTFOLIO_DATA.contact.livingTitle;
+            document.getElementById('contact-living-desc').textContent = PORTFOLIO_DATA.contact.livingDesc;
+            document.getElementById('contact-call-title').textContent = PORTFOLIO_DATA.contact.callTitle;
+            document.getElementById('contact-call-desc').textContent = PORTFOLIO_DATA.contact.callDesc;
+            document.getElementById('contact-form-title').textContent = PORTFOLIO_DATA.contact.titleRight;
+            document.getElementById('form-label-name').textContent = PORTFOLIO_DATA.contact.formLabels[0];
+            document.getElementById('form-label-email').textContent = PORTFOLIO_DATA.contact.formLabels[1];
+            document.getElementById('form-label-message').textContent = PORTFOLIO_DATA.contact.formLabels[2];
+            document.getElementById('form-btn-text').textContent = PORTFOLIO_DATA.contact.formBtnText;
+
+            const headerSocials = document.getElementById('header-socials');
+            headerSocials.innerHTML = PORTFOLIO_DATA.contact.socials.map(soc => `
+                <a href="${soc.url}" class="hover:text-primary transition"><i class="${soc.icon}"></i></a>
+            `).join('');
+
+            const contactSocials = document.getElementById('contact-socials');
+            contactSocials.innerHTML = PORTFOLIO_DATA.contact.socials.map(soc => `
+                <a href="${soc.url}" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 dark:border-white/20 text-dark dark:text-white hover:bg-dark hover:text-white dark:hover:bg-primary dark:hover:text-dark dark:hover:border-primary transition-colors">
+                    <i class="${soc.icon}"></i>
+                </a>
+            `).join('');
+
+            // Footer
+            document.getElementById('footer-year').textContent = PORTFOLIO_DATA.footer.year;
+            document.getElementById('footer-name1').textContent = PORTFOLIO_DATA.footer.name;
+            document.getElementById('footer-name2').textContent = PORTFOLIO_DATA.footer.name;
+        }
+
+        // Initialize Rendering First
+        renderPortfolio();
+
+        // ----------------------------------------------------
+        // UI Interaction Scripts
+        // ----------------------------------------------------
+
         // Hamburger Menu Logic
         const menuBtn = document.getElementById('menu-btn');
         const closeBtn = document.getElementById('close-btn');
@@ -738,39 +761,64 @@
 
         menuBtn.addEventListener('click', openMenu);
         closeBtn.addEventListener('click', closeMenu);
+        menuLinks.forEach(link => link.addEventListener('click', closeMenu));
 
-        menuLinks.forEach(link => {
-            link.addEventListener('click', closeMenu);
+        // Dark/Light Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
         });
+
+        // Scroll Spy for Menu Highlights
+        const observerOptions = { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 };
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('.menu-link').forEach(link => {
+                        link.classList.remove('text-primary');
+                        link.classList.add('text-white');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.remove('text-white');
+                            link.classList.add('text-primary');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('section[id]').forEach(section => sectionObserver.observe(section));
 
         // Sticky Header Logic
         const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                header.classList.add('bg-white', 'shadow-md', 'py-4');
+                header.classList.add('bg-white', 'dark:bg-[#111418]', 'shadow-md', 'dark:shadow-gray-900', 'py-4');
                 header.classList.remove('bg-transparent', 'py-6');
             } else {
                 header.classList.add('bg-transparent', 'py-6');
-                header.classList.remove('bg-white', 'shadow-md', 'py-4');
+                header.classList.remove('bg-white', 'dark:bg-[#111418]', 'shadow-md', 'dark:shadow-gray-900', 'py-4');
             }
         });
 
         // Typing Effect Logic
-        const words = ["DESIGNER", "DEVELOPER", "TEKKEN"];
+        const words = PORTFOLIO_DATA.hero.typedWords;
         let wordIndex = 0;
         let timer;
         const typedTextSpan = document.getElementById('typed-text');
 
         function typingEffect() {
+            if(!words || words.length === 0) return;
             let word = words[wordIndex].split("");
             const loopTyping = function() {
                 if (word.length > 0) {
                     typedTextSpan.innerHTML += word.shift();
                 } else {
-                    setTimeout(deletingEffect, 2000); // Wait 2s before deleting
+                    setTimeout(deletingEffect, 2000); 
                     return;
                 }
-                timer = setTimeout(loopTyping, 120); // Typing speed
+                timer = setTimeout(loopTyping, 120); 
             };
             loopTyping();
         }
@@ -782,16 +830,14 @@
                     word.pop();
                     typedTextSpan.innerHTML = word.join("");
                 } else {
-                    wordIndex = (wordIndex + 1) % words.length; // Move to next word
-                    setTimeout(typingEffect, 500); // Wait 0.5s before typing next
+                    wordIndex = (wordIndex + 1) % words.length; 
+                    setTimeout(typingEffect, 500); 
                     return;
                 }
-                timer = setTimeout(loopDeleting, 60); // Deleting speed (faster than typing)
+                timer = setTimeout(loopDeleting, 60); 
             };
             loopDeleting();
         }
-
-        // Start typing effect on load
         typingEffect();
 
         // Scroll Reveal Animations Logic
@@ -799,18 +845,12 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Only animate once when scrolling down
+                    observer.unobserve(entry.target); 
                 }
             });
-        }, {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        });
+        }, { root: null, rootMargin: '0px', threshold: 0.15 });
 
-        document.querySelectorAll('.fade-in-up').forEach(el => {
-            animationObserver.observe(el);
-        });
+        document.querySelectorAll('.fade-in-up').forEach(el => animationObserver.observe(el));
 
     </script>
 </body>
