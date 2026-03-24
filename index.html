@@ -1,1 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colin - Freelancer Portfolio</title>
+    <!-- Tailwind CSS (CDN for prototyping/single-file use) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#f5df4e', // The signature yellow
+                        dark: '#212529',
+                        darker: '#111418',
+                        light: '#f8f9fa',
+                        gray: {
+                            400: '#adb5bd',
+                            500: '#6c757d',
+                            600: '#495057',
+                            700: '#343a40',
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 15s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for things Tailwind is too verbose for */
+        .progress-bar-wrap {
+            background-color: #e9ecef;
+            border-radius: 999px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .progress-bar {
+            background-color: #f5df4e;
+            height: 100%;
+            border-radius: 999px;
+        }
+        
+        /* FAQ Accordion Styling */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary ~ * {
+            animation: sweep .3s ease-in-out;
+        }
+        @keyframes sweep {
+            0%    {opacity: 0; margin-top: -10px}
+            100%  {opacity: 1; margin-top: 0px}
+        }
+        
+        /* Custom form input border */
+        .form-input-custom {
+            border: none;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+            background: transparent;
+            border-radius: 0;
+            padding-left: 0;
+            padding-right: 0;
+            transition: all 0.3s;
+        }
+        .form-input-custom:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: #212529;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-600 antialiased bg-white">
 
+    <!-- Header / Navbar -->
+    <header class="absolute top-0 w-full z-50 px-6 py-6 flex justify-between items-center">
+        <div class="text-2xl font-bold tracking-wider text-dark">COLIN</div>
+        <button id="menu-btn" class="text-3xl text-dark hover:text-gray-600 transition focus:outline-none cursor-pointer">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Fullscreen Overlay Menu -->
+    <div id="overlay-menu" class="fixed inset-0 bg-black/90 z-[100] hidden flex-col justify-center items-center transition-opacity duration-300 opacity-0">
+        <button id="close-btn" class="absolute top-8 right-8 text-3xl text-gray-400 hover:text-primary transition focus:outline-none cursor-pointer">
+            <i class="fas fa-times"></i>
+        </button>
+        <nav class="flex flex-col items-center space-y-6 text-xl font-bold">
+            <a href="#home" class="text-white hover:text-primary transition menu-link">Home</a>
+            <a href="#about" class="text-white hover:text-primary transition menu-link">About Me</a>
+            <a href="#services" class="text-white hover:text-primary transition menu-link">What I Do</a>
+            <a href="#resume" class="text-white hover:text-primary transition menu-link">Resume</a>
+            <a href="#portfolio" class="text-white hover:text-primary transition menu-link">Portfolio</a>
+            <a href="#faq" class="text-white hover:text-primary transition menu-link">FAQ</a>
+            <a href="#" class="text-primary transition menu-link">Client Speak</a>
+            <a href="#contact" class="text-white hover:text-primary transition menu-link">Contact Me</a>
+        </nav>
+        <div class="flex space-x-6 mt-12 text-white text-xl">
+            <a href="#" class="hover:text-primary transition"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-primary transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-primary transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-primary transition"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="hover:text-primary transition"><i class="fab fa-dribbble"></i></a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-primary min-h-screen flex items-center pt-20 pb-12 overflow-hidden relative">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-8">
+                <!-- Text Content -->
+                <div class="lg:w-3/5 text-center lg:text-left">
+                    <h2 class="text-3xl md:text-4xl font-semibold text-dark mb-2">HI, I'M A FREELANCER</h2>
+                    <h1 class="text-6xl md:text-8xl lg:text-[100px] font-bold text-dark leading-none mb-6 tracking-tight">
+                        DESIGNER<span class="animate-pulse font-light">|</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-dark/80 mb-8 max-w-lg mx-auto lg:mx-0">based in Los Angeles, California.</p>
+                    <a href="#portfolio" class="inline-block bg-dark text-white px-8 py-4 rounded-full font-medium hover:bg-gray-700 transition duration-300 shadow-lg">View My Works</a>
+                </div>
+                
+                <!-- Profile Image -->
+                <div class="lg:w-2/5 flex justify-center mt-10 lg:mt-0 relative">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px]">
+                        <!-- Dashed rotating border -->
+                        <div class="absolute inset-[-15px] rounded-full border-[3px] border-dashed border-dark/30 animate-spin-slow"></div>
+                        <!-- Solid ring behind image -->
+                        <div class="absolute inset-2 rounded-full border-[10px] border-primary/50"></div>
+                        <!-- Image -->
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Colin Smith" class="rounded-full w-full h-full object-cover relative z-10 grayscale hover:grayscale-0 transition duration-500 shadow-2xl border-4 border-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Scroll Down indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce cursor-pointer">
+            <a href="#about"><i class="fas fa-chevron-down text-dark text-xl"></i></a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <!-- Section Header -->
+            <div class="text-center mb-16 relative">
+                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">About Me</span>
+                <h2 class="text-4xl font-bold text-dark">Know Me More</h2>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12 items-start">
+                <!-- Left Text -->
+                <div class="lg:w-2/3">
+                    <h3 class="text-2xl md:text-3xl font-bold text-dark mb-4 leading-tight">Hi, I'm <span class="border-b-4 border-primary pb-1">Colin Smith</span></h3>
+                    <p class="text-lg leading-relaxed mb-6">I'm a designer & developer with a passion for web design. I enjoy developing simple, clean and slick websites that provide real value to the end user. Thousands of clients have procured exceptional results while working with me. Delivering work within time and budget which meets client's requirements is our moto.</p>
+                </div>
+                
+                <!-- Right Experience Badge -->
+                <div class="lg:w-1/3 flex justify-center lg:justify-end items-center">
+                    <div class="w-40 h-40 bg-primary rounded-full flex flex-col items-center justify-center text-dark shadow-xl">
+                        <span class="text-6xl font-bold leading-none">22</span>
+                        <span class="text-sm font-medium mt-1 uppercase tracking-widest text-center px-4">Years of<br>Experience</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 pt-10 border-t border-gray-100">
+                <div>
+                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">Name:</p>
+                    <p class="text-lg font-bold text-dark">Colin Smith</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">Email:</p>
+                    <p class="text-lg font-bold text-primary hover:underline cursor-pointer">chat@colin.com</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">Email:</p>
+                    <p class="text-lg font-bold text-primary hover:underline cursor-pointer">chat@callum.com</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">Date of birth:</p>
+                    <p class="text-lg font-bold text-dark">11 November, 1987</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm mb-1 uppercase font-semibold tracking-wider">From:</p>
+                    <p class="text-lg font-bold text-dark">Los Angeles, USA.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-light">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <!-- Section Header -->
+            <div class="text-center mb-16 relative">
+                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">What I Do</span>
+                <h2 class="text-4xl font-bold text-dark">How I can help your next project</h2>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Item 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-primary text-4xl mb-6"><i class="fas fa-palette"></i></div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Graphic Design</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                </div>
+                <!-- Item 2 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-primary text-4xl mb-6"><i class="fas fa-desktop"></i></div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Web Design</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                </div>
+                <!-- Item 3 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-primary text-4xl mb-6"><i class="fas fa-pencil-ruler"></i></div>
+                    <h3 class="text-xl font-bold text-dark mb-3">UI/UX Design</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                </div>
+                <!-- Item 4 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-primary text-4xl mb-6"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="text-xl font-bold text-dark mb-3">App Design & Develop</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                </div>
+                <!-- Item 5 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-primary text-4xl mb-6"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Business Analysis</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                </div>
+                <!-- Item 6 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-primary text-4xl mb-6"><i class="fas fa-bullhorn"></i></div>
+                    <h3 class="text-xl font-bold text-dark mb-3">SEO Marketing</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume" class="py-24 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <!-- Section Header -->
+            <div class="text-center mb-16 relative">
+                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">Resume</span>
+                <h2 class="text-4xl font-bold text-dark">A summary of My Resume</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 mb-16">
+                <!-- Education Column -->
+                <div>
+                    <h3 class="text-2xl font-bold text-dark mb-8">My Education</h3>
+                    <div class="border-l-2 border-primary border-opacity-30 ml-3">
+                        <!-- Item -->
+                        <div class="relative pl-8 mb-10 group">
+                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
+                            <h4 class="text-xl font-bold text-dark mb-1">Master in Computer Engineering</h4>
+                            <p class="text-sm text-gray-400 mb-3 font-medium">Harvard University / 2015 - 2017</p>
+                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
+                        </div>
+                        <!-- Item -->
+                        <div class="relative pl-8 mb-10 group">
+                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
+                            <h4 class="text-xl font-bold text-dark mb-1">Bachelor in Computer Engineering</h4>
+                            <p class="text-sm text-gray-400 mb-3 font-medium">University of California / 2014 - 2015</p>
+                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
+                        </div>
+                        <!-- Item -->
+                        <div class="relative pl-8 group">
+                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
+                            <h4 class="text-xl font-bold text-dark mb-1">International Science</h4>
+                            <p class="text-sm text-gray-400 mb-3 font-medium">Harvard University / 2013 - 2014</p>
+                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Column -->
+                <div>
+                    <h3 class="text-2xl font-bold text-dark mb-8">My Experience</h3>
+                    <div class="border-l-2 border-primary border-opacity-30 ml-3">
+                        <!-- Item -->
+                        <div class="relative pl-8 mb-10 group">
+                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
+                            <h4 class="text-xl font-bold text-dark mb-1">Sr. Font End Developer</h4>
+                            <p class="text-sm text-gray-400 mb-3 font-medium">Apple Inc / 2020 - current</p>
+                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
+                        </div>
+                        <!-- Item -->
+                        <div class="relative pl-8 mb-10 group">
+                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
+                            <h4 class="text-xl font-bold text-dark mb-1">Jr. Font End Developer</h4>
+                            <p class="text-sm text-gray-400 mb-3 font-medium">Dribbble Inc / 2018 - 2020</p>
+                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
+                        </div>
+                        <!-- Item -->
+                        <div class="relative pl-8 group">
+                            <span class="absolute w-4 h-4 rounded-full bg-white border-4 border-primary left-[-9px] top-1 group-hover:bg-primary transition-colors"></span>
+                            <h4 class="text-xl font-bold text-dark mb-1">HTML Developer</h4>
+                            <p class="text-sm text-gray-400 mb-3 font-medium">Adobe Inc / 2017 - 2018</p>
+                            <p class="text-sm leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the dummy text.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div>
+                <h3 class="text-2xl font-bold text-dark mb-8">My Skills</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                    <!-- Skill -->
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="font-bold text-dark">Web Design</span>
+                            <span class="text-sm font-medium">65%</span>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    <!-- Skill -->
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="font-bold text-dark">React JS</span>
+                            <span class="text-sm font-medium">70%</span>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <!-- Skill -->
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="font-bold text-dark">HTML/CSS</span>
+                            <span class="text-sm font-medium">95%</span>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <!-- Skill -->
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="font-bold text-dark">Angular</span>
+                            <span class="text-sm font-medium">60%</span>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <!-- Skill -->
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="font-bold text-dark">JavaScript</span>
+                            <span class="text-sm font-medium">80%</span>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <!-- Skill -->
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="font-bold text-dark">Bootstrap</span>
+                            <span class="text-sm font-medium">99%</span>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar" style="width: 99%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Button -->
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center justify-center border-2 border-gray-300 text-gray-600 px-8 py-3 rounded-full font-medium hover:bg-dark hover:border-dark hover:text-white transition duration-300">
+                    Download CV <i class="fas fa-download ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+            <!-- Section Header -->
+            <div class="text-center mb-10 relative">
+                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">Portfolio</span>
+                <h2 class="text-4xl font-bold text-dark">Some of my most recent projects</h2>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12 text-sm sm:text-base font-medium">
+                <button class="text-primary border-b-2 border-primary pb-1">All</button>
+                <button class="text-gray-500 hover:text-primary transition-colors pb-1 border-b-2 border-transparent hover:border-primary">Design</button>
+                <button class="text-gray-500 hover:text-primary transition-colors pb-1 border-b-2 border-transparent hover:border-primary">Brand</button>
+                <button class="text-gray-500 hover:text-primary transition-colors pb-1 border-b-2 border-transparent hover:border-primary">Photos</button>
+            </div>
+
+            <!-- Grid -->
+            <!-- Using tight gaps to match the masonry/flush style in the design -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                <!-- Project 1 -->
+                <div class="relative group overflow-hidden aspect-square bg-white">
+                    <img src="https://images.unsplash.com/photo-1501139083538-0139583c060f?q=80&w=600&auto=format&fit=crop" alt="Project 1" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
+                        <span class="text-primary text-sm">Category</span>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="relative group overflow-hidden aspect-square bg-dark">
+                    <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?q=80&w=600&auto=format&fit=crop" alt="Project 2" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
+                        <span class="text-primary text-sm">Category</span>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="relative group overflow-hidden aspect-square bg-pink-100">
+                    <img src="https://images.unsplash.com/photo-1550882329-373f7c4e5113?q=80&w=600&auto=format&fit=crop" alt="Project 3" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
+                        <span class="text-primary text-sm">Category</span>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="relative group overflow-hidden aspect-square bg-teal-700">
+                    <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=600&auto=format&fit=crop" alt="Project 4" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
+                        <span class="text-primary text-sm">Category</span>
+                    </div>
+                </div>
+                <!-- Project 5 -->
+                <div class="relative group overflow-hidden aspect-square bg-blue-500">
+                    <img src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?q=80&w=600&auto=format&fit=crop" alt="Project 5" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
+                        <span class="text-primary text-sm">Category</span>
+                    </div>
+                </div>
+                <!-- Project 6 -->
+                <div class="relative group overflow-hidden aspect-square bg-primary">
+                    <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=600&auto=format&fit=crop" alt="Project 6" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-dark bg-opacity-80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <h4 class="text-white text-xl font-bold mb-1">Project Name</h4>
+                        <span class="text-primary text-sm">Category</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-gray-700 text-center relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">Interested in working with me?</h2>
+            <a href="#contact" class="inline-block bg-primary text-dark px-10 py-4 rounded-full font-bold hover:bg-white transition duration-300 shadow-lg text-sm uppercase tracking-wider">Hire Me!</a>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <!-- Section Header -->
+            <div class="text-left mb-12 relative md:text-left">
+                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">FAQ</span>
+                <h2 class="text-4xl font-bold text-dark">Have any questions?</h2>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <!-- Accordion Left -->
+                <div class="lg:w-3/5 w-full">
+                    <!-- Item 1 (Open by default) -->
+                    <details class="mb-4 group border border-gray-200 rounded-md" open>
+                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white group-open:text-primary transition-colors">
+                            <span class="text-dark group-open:text-primary">What is your design process?</span>
+                            <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <div class="p-5 pt-0 text-sm text-gray-500 leading-relaxed border-t border-gray-100 mt-2">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        </div>
+                    </details>
+
+                    <!-- Item 2 -->
+                    <details class="mb-4 group border border-gray-200 rounded-md">
+                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white transition-colors">
+                            <span class="text-dark group-open:text-primary">How much does a website cost?</span>
+                            <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <div class="p-5 pt-0 text-sm text-gray-500 leading-relaxed border-t border-gray-100 mt-2">
+                            The cost varies depending on the complexity and requirements of your project. Let's discuss your needs to provide an accurate estimate.
+                        </div>
+                    </details>
+
+                    <!-- Item 3 -->
+                    <details class="mb-4 group border border-gray-200 rounded-md">
+                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white transition-colors">
+                            <span class="text-dark group-open:text-primary">Do you provide ongoing support?</span>
+                            <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <div class="p-5 pt-0 text-sm text-gray-500 leading-relaxed border-t border-gray-100 mt-2">
+                            Yes, I offer maintenance and ongoing support packages to ensure your website remains up-to-date and functions smoothly.
+                        </div>
+                    </details>
+
+                    <!-- Item 4 -->
+                    <details class="mb-4 group border border-gray-200 rounded-md">
+                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 bg-white transition-colors">
+                            <span class="text-dark group-open:text-primary">What payment methods do you accept?</span>
+                            <span class="transition group-open:rotate-180 text-gray-400 group-open:text-primary">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <div class="p-5 pt-0 text-sm text-gray-500 leading-relaxed border-t border-gray-100 mt-2">
+                            I accept bank transfers, PayPal, and major credit cards through secure invoicing platforms.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Illustration Right -->
+                <div class="lg:w-2/5 flex justify-center lg:justify-end">
+                    <!-- Custom SVG mimicking the large lightbulb -->
+                    <svg width="250" height="250" viewBox="0 0 100 100" class="text-primary fill-current filter drop-shadow-xl">
+                        <!-- Radiant lines -->
+                        <line x1="10" y1="20" x2="25" y2="35" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="50" y1="5" x2="50" y2="20" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="90" y1="20" x2="75" y2="35" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="5" y1="50" x2="20" y2="50" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="95" y1="50" x2="80" y2="50" stroke="#f5df4e" stroke-width="3" stroke-linecap="round"/>
+                        
+                        <!-- Bulb body -->
+                        <path d="M50 25 C30 25, 25 45, 35 60 C40 67, 40 75, 40 75 L60 75 C60 75, 60 67, 65 60 C75 45, 70 25, 50 25 Z" fill="#f5df4e"/>
+                        
+                        <!-- Question mark inside bulb -->
+                        <text x="50" y="55" font-family="Arial" font-size="28" font-weight="bold" fill="white" text-anchor="middle">?</text>
+                        
+                        <!-- Base -->
+                        <rect x="42" y="77" width="16" height="5" fill="#333" rx="2"/>
+                        <rect x="42" y="84" width="16" height="5" fill="#333" rx="2"/>
+                        <path d="M44 91 L56 91 L53 97 L47 97 Z" fill="#333"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-24 bg-gray-500 text-white relative">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <!-- Section Header -->
+            <div class="mb-12">
+                <span class="bg-primary text-dark font-semibold px-3 py-1 rounded-sm text-sm uppercase tracking-wider inline-block mb-3">Testimonial</span>
+                <h2 class="text-4xl font-bold">What Some of my Clients Say</h2>
+            </div>
+
+            <!-- Quote Container -->
+            <div class="mt-10">
+                <div class="text-primary text-5xl opacity-50 mb-6">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <p class="text-xl md:text-2xl font-medium leading-relaxed mb-10 px-4 md:px-12">
+                    "Callum is a highly skilled professional with an eye for detail. The end result exceeded our expectations. I would highly recommend him to anyone looking for a top-tier designer."
+                </p>
+                
+                <!-- Client Info -->
+                <div class="flex flex-col items-center">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="w-16 h-16 rounded-full border-2 border-primary mb-4 shadow-lg">
+                    <h5 class="font-bold text-lg">Dennis Jacques</h5>
+                    <span class="text-sm text-gray-300">User from USA</span>
+                </div>
+
+                <!-- Slider Dots (Static visual only) -->
+                <div class="flex justify-center space-x-2 mt-8">
+                    <span class="w-3 h-3 rounded-full bg-primary"></span>
+                    <span class="w-3 h-3 rounded-full bg-white opacity-40"></span>
+                    <span class="w-3 h-3 rounded-full bg-white opacity-40"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-primary text-dark">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="flex flex-col lg:flex-row gap-16">
+                
+                <!-- Left Info -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">Let's get in touch</h2>
+                    <p class="text-lg leading-relaxed mb-8 text-dark/80">
+                        I enjoy discussing new projects and design challenges. Please share as much info, as possible so we can get the most out of our first catch-up.
+                    </p>
+                    
+                    <div class="mb-8">
+                        <h4 class="font-bold text-xl mb-1">Living In:</h4>
+                        <p class="text-dark/80">30 Shambles, Settlement, UK.</p>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h4 class="font-bold text-xl mb-1">Call:</h4>
+                        <p class="text-dark/80">(+060) 444 434 444</p>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="flex space-x-4 mt-8">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-dark/20 text-dark hover:bg-dark hover:text-white transition-colors">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Form -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-8">Estimate your Project?</h2>
+                    <form class="space-y-8">
+                        <div>
+                            <label for="name" class="block text-sm font-semibold mb-2">What is Your Name:</label>
+                            <input type="text" id="name" class="w-full form-input-custom text-lg py-2" placeholder="Your Name">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-semibold mb-2">Your Email Address:</label>
+                            <input type="email" id="email" class="w-full form-input-custom text-lg py-2" placeholder="Your Email">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-semibold mb-2">How can I Help you?:</label>
+                            <textarea id="message" rows="3" class="w-full form-input-custom text-lg py-2 resize-none" placeholder="Project Description"></textarea>
+                        </div>
+                        
+                        <div class="pt-4 text-center lg:text-left">
+                            <button type="submit" class="bg-dark text-white px-10 py-4 rounded-full font-bold hover:bg-gray-800 transition duration-300 shadow-lg flex items-center justify-center space-x-2 mx-auto lg:mx-0">
+                                <span>Send</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker text-gray-400 py-8 border-t border-gray-800">
+        <div class="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row justify-between items-center text-sm">
+            <p class="mb-4 md:mb-0">Copyright © 2023 <a href="#" class="text-white hover:text-primary font-semibold">Colin</a>. All Rights Reserved.</p>
+            <p>Designed by <a href="#" class="text-white hover:text-primary font-semibold">Colin</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const overlayMenu = document.getElementById('overlay-menu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        function openMenu() {
+            // Remove hidden and add flex so justify-center works
+            overlayMenu.classList.remove('hidden');
+            overlayMenu.classList.add('flex');
+            // Slight delay allows the display block to register before fading in
+            setTimeout(() => {
+                overlayMenu.classList.remove('opacity-0');
+                overlayMenu.classList.add('opacity-100');
+            }, 10);
+            document.body.style.overflow = 'hidden'; // Prevents background scrolling
+        }
+
+        function closeMenu() {
+            overlayMenu.classList.remove('opacity-100');
+            overlayMenu.classList.add('opacity-0');
+            // Wait for fade-out transition to finish before hiding
+            setTimeout(() => {
+                overlayMenu.classList.add('hidden');
+                overlayMenu.classList.remove('flex');
+            }, 300);
+            document.body.style.overflow = ''; // Restores background scrolling
+        }
+
+        menuBtn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+
+        // Closes the menu automatically when any of the internal links are clicked
+        menuLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    </script>
+</body>
+</html>
